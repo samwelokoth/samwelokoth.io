@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Samwel Okoth | Cybersecurity Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#030712;--bg2:#0a0f1e;--bg3:#0d1526;
+  --blue:#00d4ff;--green:#00ff88;--red:#ff003c;
+  --text:#c9d1d9;--text2:#8b949e;
+  --card:#0d1526;--border:#1e3a5f;
+  --glow-blue:0 0 20px rgba(0,212,255,0.3);
+  --glow-green:0 0 20px rgba(0,255,136,0.3);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden}
+
+/* CANVAS */
+#matrix-canvas{position:fixed;top:0;left:0;z-index:0;opacity:0.04;pointer-events:none}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(3,7,18,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Orbitron',monospace;color:var(--blue);font-size:1.1rem;letter-spacing:2px}
+.logo span{color:var(--green)}
+nav ul{list-style:none;display:flex;gap:2rem}
+nav a{color:var(--text2);text-decoration:none;font-size:.9rem;letter-spacing:1px;transition:.3s;text-transform:uppercase}
+nav a:hover{color:var(--blue)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;text-align:center;padding:2rem}
+.hero-content{max-width:800px}
+.hero-badge{display:inline-block;border:1px solid var(--green);color:var(--green);padding:.3rem 1rem;font-family:'Share Tech Mono',monospace;font-size:.75rem;letter-spacing:3px;margin-bottom:1.5rem;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+h1{font-family:'Orbitron',monospace;font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;line-height:1.1;margin-bottom:1rem}
+h1 .name{background:linear-gradient(135deg,var(--blue),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:1.25rem;color:var(--text2);margin-bottom:.5rem;letter-spacing:2px}
+.typed-wrap{font-family:'Share Tech Mono',monospace;color:var(--blue);font-size:1.1rem;margin-bottom:2rem;min-height:1.5em}
+.cursor{animation:blink .7s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+.btn{padding:.75rem 2rem;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.3s;text-decoration:none;display:inline-block}
+.btn-primary{background:linear-gradient(135deg,var(--blue),#0077aa);color:#000;border:none;box-shadow:var(--glow-blue)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(0,212,255,.5)}
+.btn-outline{background:transparent;color:var(--green);border:1px solid var(--green)}
+.btn-outline:hover{background:rgba(0,255,136,.1);box-shadow:var(--glow-green)}
+.hero-stats{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-family:'Orbitron',monospace;font-size:2rem;font-weight:700;color:var(--blue)}
+.stat-label{font-size:.8rem;color:var(--text2);letter-spacing:1px;text-transform:uppercase}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:5rem 2rem}
+.section-inner{max-width:1100px;margin:auto}
+.section-title{font-family:'Orbitron',monospace;font-size:1.8rem;font-weight:700;margin-bottom:.5rem}
+.section-title span{color:var(--blue)}
+.section-line{height:2px;width:60px;background:linear-gradient(90deg,var(--blue),transparent);margin-bottom:3rem}
+.alt-bg{background:var(--bg2)}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+@media(max-width:700px){.about-grid{grid-template-columns:1fr}}
+.about-text p{color:var(--text2);line-height:1.8;margin-bottom:1rem;font-size:1.05rem}
+.about-text strong{color:var(--blue)}
+.skills-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.skill-tag{background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);color:var(--blue);padding:.3rem .75rem;border-radius:2px;font-size:.8rem;font-family:'Share Tech Mono',monospace;letter-spacing:1px}
+.contact-links{display:flex;flex-direction:column;gap:.75rem}
+.contact-link{display:flex;align-items:center;gap:.75rem;color:var(--text2);text-decoration:none;padding:.75rem 1rem;border:1px solid var(--border);border-radius:4px;transition:.3s;font-family:'Share Tech Mono',monospace;font-size:.85rem}
+.contact-link:hover{border-color:var(--blue);color:var(--blue);background:rgba(0,212,255,.05)}
+.contact-link .icon{font-size:1.2rem}
+
+/* EXPERIENCE */
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--blue),var(--green),transparent)}
+.tl-item{position:relative;margin-bottom:2.5rem}
+.tl-dot{position:absolute;left:-2.4rem;top:.3rem;width:14px;height:14px;border-radius:50%;background:var(--blue);box-shadow:0 0 10px var(--blue);border:2px solid var(--bg)}
+.tl-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.5rem;transition:.3s}
+.tl-card:hover{border-color:var(--blue);box-shadow:var(--glow-blue)}
+.tl-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem}
+.tl-title{font-family:'Orbitron',monospace;font-size:1rem;color:var(--blue);font-weight:700}
+.tl-company{font-size:.9rem;color:var(--green);margin:.2rem 0}
+.tl-date{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:var(--text2);background:rgba(0,212,255,.08);padding:.25rem .6rem;border-radius:2px;white-space:nowrap}
+.tl-card ul{list-style:none;padding:0}
+.tl-card li{color:var(--text2);font-size:.95rem;padding:.3rem 0 .3rem 1.2rem;position:relative;line-height:1.5}
+.tl-card li::before{content:'▹';position:absolute;left:0;color:var(--blue)}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.5rem;transition:.3s;position:relative;overflow:hidden}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--green))}
+.project-card:hover{transform:translateY(-4px);border-color:var(--green);box-shadow:var(--glow-green)}
+.project-icon{font-size:2rem;margin-bottom:1rem}
+.project-card h3{font-family:'Orbitron',monospace;font-size:.95rem;color:var(--blue);margin-bottom:.5rem}
+.project-card p{color:var(--text2);font-size:.9rem;line-height:1.6}
+.project-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}
+.ptag{font-size:.7rem;font-family:'Share Tech Mono',monospace;padding:.2rem .5rem;border-radius:2px;background:rgba(0,255,136,.08);color:var(--green);border:1px solid rgba(0,255,136,.2)}
+
+/* CERTS */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.cert-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1.2rem;display:flex;align-items:center;gap:1rem;transition:.3s}
+.cert-card:hover{border-color:var(--blue);box-shadow:var(--glow-blue)}
+.cert-icon{font-size:1.8rem;flex-shrink:0}
+.cert-info h4{font-size:.9rem;color:var(--text);font-weight:600;margin-bottom:.25rem}
+.cert-info span{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--text2)}
+
+/* SKILLS BARS */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@media(max-width:600px){.skills-grid{grid-template-columns:1fr}}
+.skill-item{margin-bottom:1.2rem}
+.skill-header{display:flex;justify-content:space-between;margin-bottom:.4rem;font-size:.9rem}
+.skill-name{color:var(--text)}
+.skill-pct{color:var(--blue);font-family:'Share Tech Mono',monospace;font-size:.8rem}
+.skill-bar{height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden}
+.skill-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--green));width:0;transition:width 1.5s ease}
+
+/* MEMBERSHIPS */
+.mem-grid{display:flex;flex-wrap:wrap;gap:.75rem}
+.mem-tag{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:4px;padding:.6rem 1rem;font-size:.85rem;color:var(--text2);transition:.3s}
+.mem-tag:hover{border-color:var(--blue);color:var(--blue)}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);text-align:center;padding:2rem;color:var(--text2);font-family:'Share Tech Mono',monospace;font-size:.8rem;position:relative;z-index:1}
+footer span{color:var(--blue)}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<canvas id="matrix-canvas"></canvas>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">S<span>.</span>OKOTH</div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#certs">Certs</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">// AVAILABLE FOR OPPORTUNITIES</div>
+    <h1><span class="name">Samwel Okoth</span></h1>
+    <div class="hero-sub">Cybersecurity Analyst &amp; Threat Hunter</div>
+    <div class="typed-wrap"><span id="typed"></span><span class="cursor">█</span></div>
+    <div class="hero-btns">
+      <a href="#experience" class="btn btn-primary">View My Work</a>
+      <a href="mailto:samwelokoth8@gmail.com" class="btn btn-outline">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Years Experience</div></div>
+      <div class="stat"><div class="stat-num">30%</div><div class="stat-label">Threat Detection ↑</div></div>
+      <div class="stat"><div class="stat-num">90%+</div><div class="stat-label">SLA Compliance</div></div>
+      <div class="stat"><div class="stat-num">40%</div><div class="stat-label">Manual Work ↓ via Automation</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="alt-bg">
+  <div class="section-inner">
+    <div class="section-title"><span>#</span> About Me</div>
+    <div class="section-line"></div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>Results-driven <strong>Cybersecurity Analyst and Threat Hunter</strong> with over 3 years of hands-on experience in penetration testing, vulnerability assessment, incident response and network defense.</p>
+        <p>Adept at executing both <strong>offensive and defensive security operations</strong> to proactively identify and neutralize threats across complex IT environments.</p>
+        <p>Demonstrated success improving early threat detection by <strong>30%</strong>, maintaining SLA compliance above <strong>90%</strong>, and reducing manual workloads by up to <strong>40%</strong> through scripting automation.</p>
+        <div class="skills-list">
+          <span class="skill-tag">Penetration Testing</span>
+          <span class="skill-tag">Threat Hunting</span>
+          <span class="skill-tag">Incident Response</span>
+          <span class="skill-tag">SIEM / EDR</span>
+          <span class="skill-tag">OWASP Top 10</span>
+          <span class="skill-tag">Python / Bash</span>
+          <span class="skill-tag">Network Defense</span>
+          <span class="skill-tag">MITRE ATT&CK</span>
+          <span class="skill-tag">Vulnerability Assessment</span>
+          <span class="skill-tag">CTF Competitions</span>
+        </div>
+      </div>
+      <div class="reveal" style="animation-delay:.2s">
+        <div class="contact-links">
+          <a href="mailto:samwelokoth8@gmail.com" class="contact-link"><span class="icon">📧</span> samwelokoth8@gmail.com</a>
+          <a href="https://github.com" class="contact-link" target="_blank"><span class="icon">💻</span> GitHub Profile</a>
+          <a href="https://linkedin.com" class="contact-link" target="_blank"><span class="icon">🔗</span> LinkedIn Profile</a>
+          <a href="#" class="contact-link"><span class="icon">📁</span> Portfolio Website</a>
+          <a href="#" class="contact-link"><span class="icon">📍</span> Nairobi, Kenya</a>
+          <a href="#" class="contact-link"><span class="icon">🎓</span> B.Sc. Information Technology — TUM</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-title"><span>#</span> Experience</div>
+    <div class="section-line"></div>
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-title">Threat Hunter</div>
+              <div class="tl-company">Compulynx Ltd — Nairobi, Kenya</div>
+            </div>
+            <div class="tl-date">Apr 2025 – Dec 2025</div>
+          </div>
+          <ul>
+            <li>Monitored security telemetry across 100+ endpoints using SIEM and EDR tools, improving early threat detection by ~30%.</li>
+            <li>Triaged and resolved 15–25 high-priority incidents weekly, maintaining SLA compliance above 90% and improving mean response time by 20%.</li>
+            <li>Conducted vulnerability assessments and coordinated patch management, reducing recurring vulnerabilities by 25%.</li>
+            <li>Developed Python and Bash automation scripts, reducing manual analyst workload by 40%.</li>
+            <li>Strengthened access control policies enforcing least-privilege principles, improving compliance by 20%.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot" style="background:var(--green);box-shadow:0 0 10px var(--green)"></div>
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-title">Junior Threat Hunter (Intern)</div>
+              <div class="tl-company">Millennium Solutions EA Ltd — Nairobi, Kenya</div>
+            </div>
+            <div class="tl-date">Sep 2023 – Jan 2024</div>
+          </div>
+          <ul>
+            <li>Assisted senior analysts in identifying and cataloguing client-side vulnerabilities, improving detection coverage by 20%.</li>
+            <li>Supported incident escalation workflows, reducing response delays by 15% through clearer documentation.</li>
+            <li>Automated routine Linux-based security tasks using Bash scripting, reducing manual workload by 10–15%.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-title">Cybersecurity Analyst</div>
+              <div class="tl-company">Serianu Limited — Nairobi, Kenya</div>
+            </div>
+            <div class="tl-date">Apr 2023 – Sep 2023</div>
+          </div>
+          <ul>
+            <li>Conducted in-depth vulnerability assessments, improving security visibility by 35%.</li>
+            <li>Identified and mapped OWASP Top 10 vulnerabilities in web applications, improving remediation prioritization by 30%.</li>
+            <li>Supported penetration testing engagements, contributing to a 40% improvement in application security posture.</li>
+            <li>Contributed to risk analysis reports that informed executive-level security decision-making.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot" style="background:var(--green);box-shadow:0 0 10px var(--green)"></div>
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-title">Penetration Tester (Volunteer)</div>
+              <div class="tl-company">BSides Mombasa</div>
+            </div>
+            <div class="tl-date">Jun 2022 – Dec 2023</div>
+          </div>
+          <ul>
+            <li>Executed controlled cyberattack simulations, improving organizational security resilience awareness by 40%.</li>
+            <li>Performed privilege escalation and lateral movement testing, exposing critical system misconfigurations.</li>
+            <li>Authored vulnerability reports with detailed remediation guidance, improving fix rates by 30%.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-title">Technical Support Officer</div>
+              <div class="tl-company">Infonet Africa — Nairobi, Kenya</div>
+            </div>
+            <div class="tl-date">Mar 2020 – Jul 2021</div>
+          </div>
+          <ul>
+            <li>Provided first and second-line technical support to 50+ users, reducing system downtime by 30%.</li>
+            <li>Maintained enterprise systems including Windows Server and Active Directory, achieving ~95% uptime.</li>
+            <li>Configured and maintained enterprise LAN/WAN infrastructure, improving network reliability by 25%.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="alt-bg">
+  <div class="section-inner">
+    <div class="section-title"><span>#</span> Projects</div>
+    <div class="section-line"></div>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-icon">🛡️</div>
+        <h3>Network Security Hardening</h3>
+        <p>Conducted comprehensive vulnerability assessments and implemented layered security controls across a simulated enterprise network, reducing attack surface exposure by approximately 30%.</p>
+        <div class="project-tags">
+          <span class="ptag">Vulnerability Assessment</span>
+          <span class="ptag">Network Security</span>
+          <span class="ptag">Defense-in-Depth</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-icon">🚩</div>
+        <h3>CTF Competitions</h3>
+        <p>Active participant in Capture The Flag competitions on TryHackMe, HackTheBox, OverTheWire, and PicoCTF — applying skills in web exploitation, binary analysis, and network forensics.</p>
+        <div class="project-tags">
+          <span class="ptag">TryHackMe</span>
+          <span class="ptag">HackTheBox</span>
+          <span class="ptag">Web Exploitation</span>
+          <span class="ptag">Forensics</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-icon">🎣</div>
+        <h3>Phishing Awareness Campaign</h3>
+        <p>Created and shared knowledge on phishing methodologies and remediation strategies, reducing attack surface and improving community awareness around social engineering threats.</p>
+        <div class="project-tags">
+          <span class="ptag">Social Engineering</span>
+          <span class="ptag">Security Awareness</span>
+          <span class="ptag">Phishing</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-icon">✍️</div>
+        <h3>Security Blogging</h3>
+        <p>Writing technical security content covering penetration testing methodologies, threat hunting techniques, and cybersecurity career insights to empower the community.</p>
+        <div class="project-tags">
+          <span class="ptag">Threat Hunting</span>
+          <span class="ptag">Pentest</span>
+          <span class="ptag">Knowledge Sharing</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-title"><span>#</span> Skills</div>
+    <div class="section-line"></div>
+    <div class="skills-grid">
+      <div class="reveal">
+        <h3 style="color:var(--blue);font-family:'Orbitron',monospace;font-size:.9rem;margin-bottom:1.5rem;letter-spacing:2px">// OFFENSIVE SECURITY</h3>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Penetration Testing</span><span class="skill-pct">90%</span></div><div class="skill-bar"><div class="skill-fill" data-w="90"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">OWASP Top 10 / Web App Testing</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-fill" data-w="85"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Privilege Escalation</span><span class="skill-pct">80%</span></div><div class="skill-bar"><div class="skill-fill" data-w="80"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Social Engineering / Phishing</span><span class="skill-pct">80%</span></div><div class="skill-bar"><div class="skill-fill" data-w="80"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">CTF / Binary Analysis</span><span class="skill-pct">75%</span></div><div class="skill-bar"><div class="skill-fill" data-w="75"></div></div></div>
+      </div>
+      <div class="reveal" style="animation-delay:.2s">
+        <h3 style="color:var(--green);font-family:'Orbitron',monospace;font-size:.9rem;margin-bottom:1.5rem;letter-spacing:2px">// DEFENSIVE SECURITY</h3>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Threat Hunting / SIEM / EDR</span><span class="skill-pct">92%</span></div><div class="skill-bar"><div class="skill-fill" data-w="92"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Incident Response</span><span class="skill-pct">88%</span></div><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Vulnerability Assessment & Patching</span><span class="skill-pct">85%</span></div><div class="skill-bar"><div class="skill-fill" data-w="85"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Python / Bash Automation</span><span class="skill-pct">82%</span></div><div class="skill-bar"><div class="skill-fill" data-w="82"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span class="skill-name">Network Defense / LAN/WAN</span><span class="skill-pct">80%</span></div><div class="skill-bar"><div class="skill-fill" data-w="80"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs" class="alt-bg">
+  <div class="section-inner">
+    <div class="section-title"><span>#</span> Certifications</div>
+    <div class="section-line"></div>
+    <div class="certs-grid">
+      <div class="cert-card reveal"><div class="cert-icon">🎓</div><div class="cert-info"><h4>B.Sc. Information Technology</h4><span>Technical University of Mombasa · 2020–2024</span></div></div>
+      <div class="cert-card reveal"><div class="cert-icon">🤖</div><div class="cert-info"><h4>AI for Career Essentials</h4><span>ALX Africa · Feb 2026</span></div></div>
+      <div class="cert-card reveal"><div class="cert-icon">⚔️</div><div class="cert-info"><h4>Intermediate Ethical Hacker</h4><span>Cyber Shujaa · Dec 2025</span></div></div>
+      <div class="cert-card reveal"><div class="cert-icon">🔐</div><div class="cert-info"><h4>Getting Started in Cybersecurity 2.0</h4><span>Fortinet · Sep 2025</span></div></div>
+      <div class="cert-card reveal"><div class="cert-icon">🌐</div><div class="cert-info"><h4>Introduction to Threat Landscape</h4><span>Fortinet · Sep 2025</span></div></div>
+      <div class="cert-card reveal"><div class="cert-icon">🏅</div><div class="cert-info"><h4>Fortinet Certified Fundamentals</h4><span>Fortinet · Sep 2024</span></div></div>
+      <div class="cert-card reveal"><div class="cert-icon">🐧</div><div class="cert-info"><h4>Certified Linux Practitioner</h4><span>CyberTalents · Apr 2023</span></div></div>
+      <div class="cert-card reveal"><div class="cert-icon">📡</div><div class="cert-info"><h4>Cybersecurity Essentials</h4><span>Cisco · Jul 2022</span></div></div>
+      <div class="cert-card reveal"><div class="cert-icon">🛡️</div><div class="cert-info"><h4>Introduction to Cybersecurity</h4><span>Cisco · May 2022</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIPS -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-title"><span>#</span> Community &amp; Contact</div>
+    <div class="section-line"></div>
+    <div class="about-grid">
+      <div class="reveal">
+        <h3 style="color:var(--blue);font-family:'Orbitron',monospace;font-size:.85rem;letter-spacing:2px;margin-bottom:1rem">// PROFESSIONAL MEMBERSHIPS</h3>
+        <div class="mem-grid">
+          <div class="mem-tag">ISACA</div>
+          <div class="mem-tag">ISC² Candidate</div>
+          <div class="mem-tag">OWASP</div>
+          <div class="mem-tag">ISSA</div>
+          <div class="mem-tag">Cybersecurity Tribe Africa</div>
+          <div class="mem-tag">CyberShujaa Alumni</div>
+          <div class="mem-tag">CyberTalents</div>
+          <div class="mem-tag">BSides Mombasa</div>
+        </div>
+      </div>
+      <div class="reveal" style="animation-delay:.2s">
+        <h3 style="color:var(--green);font-family:'Orbitron',monospace;font-size:.85rem;letter-spacing:2px;margin-bottom:1rem">// GET IN TOUCH</h3>
+        <div class="contact-links">
+          <a href="mailto:samwelokoth8@gmail.com" class="contact-link"><span class="icon">📧</span>samwelokoth8@gmail.com</a>
+          <a href="tel:+254707123450" class="contact-link"><span class="icon">📱</span>+254 707 123 450</a>
+          <a href="https://github.com" class="contact-link" target="_blank"><span class="icon">💻</span>GitHub</a>
+          <a href="https://linkedin.com" class="contact-link" target="_blank"><span class="icon">🔗</span>LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; Built by <span>Samwel Okoth</span> · Nairobi, Kenya · <span>2025</span></p>
+  <p style="margin-top:.5rem;font-size:.7rem;color:#3a4a5a">// Cybersecurity Analyst &amp; Threat Hunter</p>
+</footer>
+
+<script>
+// Matrix canvas
+const canvas=document.getElementById('matrix-canvas');
+const ctx=canvas.getContext('2d');
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+const cols=Math.floor(window.innerWidth/20);
+const drops=Array(cols).fill(1);
+const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+{}|<>?';
+function drawMatrix(){
+  ctx.fillStyle='rgba(3,7,18,0.05)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#00ff88';
+  ctx.font='14px Share Tech Mono';
+  drops.forEach((y,i)=>{
+    const c=chars[Math.floor(Math.random()*chars.length)];
+    ctx.fillText(c,i*20,y*20);
+    if(y*20>canvas.height&&Math.random()>.975)drops[i]=0;
+    drops[i]++;
+  });
+}
+setInterval(drawMatrix,60);
+
+// Typed effect
+const phrases=['Penetration Tester','Threat Hunter','Incident Responder','Vulnerability Analyst','Python Automator','CTF Enthusiast'];
+let pi=0,ci=0,del=false;
+const el=document.getElementById('typed');
+function type(){
+  const phrase=phrases[pi];
+  if(!del){
+    el.textContent=phrase.slice(0,++ci);
+    if(ci===phrase.length){del=true;setTimeout(type,1800);return}
+  }else{
+    el.textContent=phrase.slice(0,--ci);
+    if(ci===0){del=false;pi=(pi+1)%phrases.length}
+  }
+  setTimeout(type,del?60:90);
+}
+type();
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible')}});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Skill bars
+const barObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.skill-fill').forEach(f=>{
+        f.style.width=f.dataset.w+'%';
+      });
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.skills-grid').forEach(g=>barObs.observe(g));
+</script>
+</body>
+</html>
